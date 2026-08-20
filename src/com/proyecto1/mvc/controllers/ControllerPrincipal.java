@@ -38,6 +38,7 @@ public class ControllerPrincipal {
 		
 		vp.btnTareasPendientes.addActionListener(e->{
 			tcp.buttonsPanel.setVisible(true);
+			tcp.model.setDataVector(tcp.getData(), tcp.getColumns());
 			vp.setContent(tcp, "Tareas - Pendientes");
 		});
 		
