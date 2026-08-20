@@ -33,26 +33,26 @@ public class ViewPrincipal extends JFrame {
 		setContentPane(contentPane);
 		
 		JPanel buttonsPanel = new JPanel();
-		buttonsPanel.setBackground(Color.LIGHT_GRAY);
-		buttonsPanel.setBorder(new EmptyBorder(20, 25, 450, 25));
+		buttonsPanel.setBackground(new Color(18, 19, 42));
+		buttonsPanel.setBorder(new EmptyBorder(20, 25, 400, 25));
 		contentPane.add(buttonsPanel, BorderLayout.WEST);
-		buttonsPanel.setLayout(new GridLayout(3, 1, 0, 15));
+		buttonsPanel.setLayout(new GridLayout(3, 1, 0, 70));
 		
 		btnTareasPendientes = new JButton("Tareas Pendientes");
-		btnTareasPendientes.setForeground(Color.DARK_GRAY);
-		btnTareasPendientes.setBackground(Color.WHITE);
+		btnTareasPendientes.setForeground(Color.WHITE);
+		btnTareasPendientes.setBackground(new Color(46, 53, 50));
 		btnTareasPendientes.setFont(new Font("Yu Gothic", Font.BOLD, 15));
 		buttonsPanel.add(btnTareasPendientes);
 		
 		btnTareasCompletadas = new JButton("Tareas Completadas");
-		btnTareasCompletadas.setForeground(Color.DARK_GRAY);
-		btnTareasCompletadas.setBackground(Color.WHITE);
+		btnTareasCompletadas.setForeground(Color.WHITE);
+		btnTareasCompletadas.setBackground(new Color(46, 53, 50));
 		btnTareasCompletadas.setFont(new Font("Yu Gothic", Font.BOLD, 16));
 		buttonsPanel.add(btnTareasCompletadas);
 		
 		btnCategorias = new JButton("Categorias");
-		btnCategorias.setForeground(Color.DARK_GRAY);
-		btnCategorias.setBackground(Color.WHITE);
+		btnCategorias.setForeground(Color.WHITE);
+		btnCategorias.setBackground(new Color(46, 53, 50));
 		btnCategorias.setFont(new Font("Yu Gothic", Font.BOLD, 16));
 		buttonsPanel.add(btnCategorias);
 		
@@ -68,13 +68,14 @@ public class ViewPrincipal extends JFrame {
 		panel_1.setBackground(Color.BLACK);
 		panel.add(panel_1, BorderLayout.NORTH);
 		
-		lblTitulo = new JLabel("Categoria - Listas");
+		lblTitulo = new JLabel("Sistema Gestor de Tareas");
 		lblTitulo.setForeground(Color.WHITE);
 		lblTitulo.setFont(new Font("Yu Gothic", Font.BOLD, 30));
 		panel_1.add(lblTitulo);
 		
 		panelContenido = new JPanel();
 		panel.add(panelContenido, BorderLayout.CENTER);
+		panelContenido.setLayout(new BorderLayout(0, 0));
 	}
 	
 	

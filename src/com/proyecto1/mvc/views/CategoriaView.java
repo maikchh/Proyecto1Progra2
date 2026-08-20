@@ -13,46 +13,52 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
 
 public class CategoriaView extends JPanel {
-	public JTable table;
 	public JButton btnNueva;
 	public JButton btnEditar;
 	public JButton btnEliminar;
 	public DefaultTableModel model;
+	private JTable table;
 
 	
 	public CategoriaView() {
 		setLayout(new BorderLayout(0, 0));
+		this.setBackground(new Color(18, 19, 42));
+		
+		JScrollPane scrollPane = new JScrollPane();
+		this.add(scrollPane, BorderLayout.CENTER);
+		
+		model = new DefaultTableModel();
+		table = new JTable(model);
+		table.setForeground(Color.WHITE);
+		table.setFont(new Font("Yu Gothic", Font.BOLD, 20));
+		table.getTableHeader().setFont(new Font("Yu Gothic", Font.BOLD, 18));
+		scrollPane.setViewportView(table);
 		
 		JPanel buttonsPanel = new JPanel();
+		buttonsPanel.setBackground(new Color(18, 19, 42));
 		FlowLayout flowLayout = (FlowLayout) buttonsPanel.getLayout();
 		flowLayout.setHgap(30);
 		flowLayout.setAlignment(FlowLayout.RIGHT);
 		buttonsPanel.setBorder(new EmptyBorder(25, 25, 25, 25));
-		buttonsPanel.setBackground(Color.WHITE);
 		add(buttonsPanel, BorderLayout.SOUTH);
 		
 		btnNueva = new JButton("Nueva");
+		btnNueva.setForeground(Color.WHITE);
 		btnNueva.setFont(new Font("Yu Gothic", Font.BOLD, 26));
-		btnNueva.setBackground(Color.GRAY);
+		btnNueva.setBackground(new Color(46, 53, 50));
 		buttonsPanel.add(btnNueva);
 		
 		btnEditar = new JButton("Editar");
+		btnEditar.setForeground(Color.WHITE);
 		btnEditar.setFont(new Font("Yu Gothic", Font.BOLD, 26));
-		btnEditar.setBackground(Color.GRAY);
+		btnEditar.setBackground(new Color(46, 53, 50));
 		buttonsPanel.add(btnEditar);
 		
 		btnEliminar = new JButton("Eliminar");
+		btnEliminar.setForeground(Color.WHITE);
 		btnEliminar.setFont(new Font("Yu Gothic", Font.BOLD, 26));
-		btnEliminar.setBackground(Color.GRAY);
+		btnEliminar.setBackground(new Color(46, 53, 50));
 		buttonsPanel.add(btnEliminar);
-		
-		JScrollPane scrollPane = new JScrollPane();
-		add(scrollPane, BorderLayout.CENTER);
-		
-		model = new DefaultTableModel();
-		table = new JTable(model);
-		add(table, BorderLayout.CENTER);
-
 	}
 
 	public String[] getColumns() {
@@ -61,6 +67,7 @@ public class CategoriaView extends JPanel {
 	
 	public Object[][] getData(/*AQUI VA EL ARRAYLIST DE CATEGORIA*/){
 		
-		return null;
+		Object[][] data = new Object[5][getColumns().length];
+		return data;
 	}
 }

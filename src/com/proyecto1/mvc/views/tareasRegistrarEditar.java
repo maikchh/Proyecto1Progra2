@@ -5,55 +5,100 @@ import javax.swing.JLabel;
 import javax.swing.JTextField;
 import javax.swing.JTextPane;
 import javax.swing.JComboBox;
+
+import java.awt.Color;
+
 import javax.swing.JButton;
+import java.awt.BorderLayout;
+import java.awt.FlowLayout;
+import java.awt.Font;
+import javax.swing.border.EmptyBorder;
+import java.awt.GridLayout;
+import javax.swing.SwingConstants;
 
 public class tareasRegistrarEditar extends JPanel {
-	
-	public JTextField tNombreTareas;
-	public JTextField tDescripcionTareas;
-	public JButton btnGuardarTareas;
-	public JButton btnRegresarTareas;
-	public JComboBox cbxCategTareasR;
+	public JPanel buttonsPanel;
+	public JPanel formPanel;
+	public JButton btnGuardar;
+	public JButton btnRegresar;
+	public JPanel panelNombre;
+	public JPanel panelDescripcion;
+	public JPanel panelCategoria;
+	public JLabel lblNombre;
+	public JLabel lblDescripcin;
+	public JLabel lblCategoria;
+	public JTextField txtDescripcion;
 
 	/**
 	 * Create the panel.
 	 */
 	public tareasRegistrarEditar() {
-		setLayout(null);
+		this.setBackground(new Color(18, 19, 42));
+		setLayout(new BorderLayout(0, 0));
 		
-		JLabel lblNombre = new JLabel("Nombre");
-		lblNombre.setBounds(43, 24, 56, 16);
-		add(lblNombre);
+		buttonsPanel = new JPanel();
+		buttonsPanel.setBorder(new EmptyBorder(10, 0, 10, 0));
+		FlowLayout flowLayout = (FlowLayout) buttonsPanel.getLayout();
+		flowLayout.setHgap(20);
+		add(buttonsPanel, BorderLayout.SOUTH);
 		
-		tNombreTareas = new JTextField();
-		tNombreTareas.setBounds(43, 53, 303, 22);
-		add(tNombreTareas);
-		tNombreTareas.setColumns(10);
+		btnGuardar = new JButton("Guardar");
+		btnGuardar.setForeground(Color.WHITE);
+		btnGuardar.setBackground(new Color(46, 53, 50));
+		btnGuardar.setFont(new Font("Yu Gothic", Font.BOLD, 25));
+		buttonsPanel.add(btnGuardar);
 		
-		JLabel lblDescripcion = new JLabel("Descripcion");
-		lblDescripcion.setBounds(43, 88, 73, 16);
-		add(lblDescripcion);
+		btnRegresar = new JButton("Regresar");
+		btnRegresar.setForeground(Color.WHITE);
+		btnRegresar.setBackground(new Color(46, 53, 50));
+		btnRegresar.setFont(new Font("Yu Gothic", Font.BOLD, 25));
+		buttonsPanel.add(btnRegresar);
 		
-		tDescripcionTareas = new JTextField();
-		tDescripcionTareas.setBounds(43, 117, 303, 61);
-		add(tDescripcionTareas);
-		tDescripcionTareas.setColumns(10);
+		formPanel = new JPanel();
+		formPanel.setBorder(new EmptyBorder(0, 20, 0, 0));
+		add(formPanel, BorderLayout.CENTER);
+		formPanel.setLayout(new GridLayout(3, 1, 0, 0));
 		
-		JLabel lblCategoria = new JLabel("Categoria");
-		lblCategoria.setBounds(43, 191, 56, 16);
-		add(lblCategoria);
+		panelNombre = new JPanel();
+		panelNombre.setBorder(new EmptyBorder(50, 50, 50, 50));
+		formPanel.add(panelNombre);
+		panelNombre.setLayout(new GridLayout(2, 1, 0, 0));
 		
-		cbxCategTareasR = new JComboBox();
-		cbxCategTareasR.setBounds(43, 218, 303, 22);
-		add(cbxCategTareasR);
+		lblNombre = new JLabel("Nombre");
+		lblNombre.setHorizontalAlignment(SwingConstants.LEFT);
+		lblNombre.setFont(new Font("Yu Gothic", Font.BOLD, 25));
+		panelNombre.add(lblNombre);
 		
-		btnGuardarTareas = new JButton("Guardar");
-		btnGuardarTareas.setBounds(43, 253, 97, 25);
-		add(btnGuardarTareas);
+		JTextField txtName = new JTextField();
+		txtName.setFont(new Font("Yu Gothic", Font.BOLD, 25));
+		panelNombre.add(txtName);
+		txtName.setColumns(10);
 		
-		btnRegresarTareas = new JButton("Regresar");
-		btnRegresarTareas.setBounds(152, 253, 97, 25);
-		add(btnRegresarTareas);
+		panelDescripcion = new JPanel();
+		panelDescripcion.setBorder(new EmptyBorder(50, 50, 50, 50));
+		formPanel.add(panelDescripcion);
+		panelDescripcion.setLayout(new GridLayout(2, 1, 0, 0));
+		
+		lblDescripcin = new JLabel("Descripci\u00F3n");
+		panelDescripcion.add(lblDescripcin);
+		lblDescripcin.setFont(new Font("Yu Gothic", Font.BOLD, 25));
+		
+		txtDescripcion = new JTextField();
+		txtDescripcion.setFont(new Font("Yu Gothic", Font.BOLD, 25));
+		panelDescripcion.add(txtDescripcion);
+		txtDescripcion.setColumns(10);
+		
+		panelCategoria = new JPanel();
+		panelCategoria.setBorder(new EmptyBorder(50, 50, 50, 50));
+		formPanel.add(panelCategoria);
+		panelCategoria.setLayout(new GridLayout(2, 1, 0, 0));
+		
+		lblCategoria = new JLabel("Categoria");
+		lblCategoria.setFont(new Font("Yu Gothic", Font.BOLD, 25));
+		panelCategoria.add(lblCategoria);
+		
+		JComboBox comboBox = new JComboBox();
+		panelCategoria.add(comboBox);
 
 	}
 }
