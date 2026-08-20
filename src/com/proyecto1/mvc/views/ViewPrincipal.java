@@ -39,12 +39,21 @@ public class ViewPrincipal extends JFrame {
 		buttonsPanel.setLayout(new GridLayout(3, 1, 0, 15));
 		
 		btnTareasPendientes = new JButton("Tareas Pendientes");
+		btnTareasPendientes.setForeground(Color.DARK_GRAY);
+		btnTareasPendientes.setBackground(Color.WHITE);
+		btnTareasPendientes.setFont(new Font("Yu Gothic", Font.BOLD, 15));
 		buttonsPanel.add(btnTareasPendientes);
 		
 		btnTareasCompletadas = new JButton("Tareas Completadas");
+		btnTareasCompletadas.setForeground(Color.DARK_GRAY);
+		btnTareasCompletadas.setBackground(Color.WHITE);
+		btnTareasCompletadas.setFont(new Font("Yu Gothic", Font.BOLD, 16));
 		buttonsPanel.add(btnTareasCompletadas);
 		
 		btnCategorias = new JButton("Categorias");
+		btnCategorias.setForeground(Color.DARK_GRAY);
+		btnCategorias.setBackground(Color.WHITE);
+		btnCategorias.setFont(new Font("Yu Gothic", Font.BOLD, 16));
 		buttonsPanel.add(btnCategorias);
 		
 		JPanel panel = new JPanel();
