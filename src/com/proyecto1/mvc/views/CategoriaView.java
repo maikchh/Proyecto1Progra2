@@ -11,6 +11,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.UIManager;
 
 public class CategoriaView extends JPanel {
 	public JButton btnNueva;
@@ -35,7 +36,7 @@ public class CategoriaView extends JPanel {
 		scrollPane.setViewportView(table);
 		
 		JPanel buttonsPanel = new JPanel();
-		buttonsPanel.setBackground(new Color(18, 19, 42));
+		buttonsPanel.setBackground(UIManager.getColor("Tree.hash"));
 		FlowLayout flowLayout = (FlowLayout) buttonsPanel.getLayout();
 		flowLayout.setHgap(30);
 		flowLayout.setAlignment(FlowLayout.RIGHT);

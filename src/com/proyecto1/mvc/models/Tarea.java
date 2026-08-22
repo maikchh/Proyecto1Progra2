@@ -49,6 +49,10 @@ public class Tarea implements Entidad {
 	public void setEstado(boolean estado) {
 		this.estado = estado;
 	}
+	
+	public boolean getEstado() {
+		return this.estado;
+	}
 	public int getIdCategoria() {
 		return idCategoria;
 	}
