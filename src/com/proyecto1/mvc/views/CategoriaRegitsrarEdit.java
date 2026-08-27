@@ -17,7 +17,7 @@ public class CategoriaRegitsrarEdit extends JPanel {
 	
 	public CategoriaRegitsrarEdit() {
 		setLayout(null);
-		this.setBackground(new Color(18, 19, 42));
+		//this.setBackground(new Color(18, 19, 42));
 		
 		JLabel lblNombre = new JLabel("Nombre");
 		lblNombre.setForeground(Color.WHITE);
@@ -44,5 +44,9 @@ public class CategoriaRegitsrarEdit extends JPanel {
 		btnRegresar.setBounds(538, 273, 171, 38);
 		add(btnRegresar);
 
+	}
+	
+	public void cls() {
+		txtNombreCategoria.setText(null);
 	}
 }

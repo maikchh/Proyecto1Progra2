@@ -28,6 +28,8 @@ public class tareasRegistrarEditar extends JPanel {
 	public JLabel lblDescripcin;
 	public JLabel lblCategoria;
 	public JTextField txtDescripcion;
+	public JComboBox cbCategoria;
+	public JTextField txtName;
 
 	/**
 	 * Create the panel.
@@ -69,7 +71,7 @@ public class tareasRegistrarEditar extends JPanel {
 		lblNombre.setFont(new Font("Yu Gothic", Font.BOLD, 25));
 		panelNombre.add(lblNombre);
 		
-		JTextField txtName = new JTextField();
+		txtName = new JTextField();
 		txtName.setFont(new Font("Yu Gothic", Font.BOLD, 25));
 		panelNombre.add(txtName);
 		txtName.setColumns(10);
@@ -97,8 +99,9 @@ public class tareasRegistrarEditar extends JPanel {
 		lblCategoria.setFont(new Font("Yu Gothic", Font.BOLD, 25));
 		panelCategoria.add(lblCategoria);
 		
-		JComboBox comboBox = new JComboBox();
-		panelCategoria.add(comboBox);
+		cbCategoria = new JComboBox();
+		cbCategoria.setFont(new Font("Yu Gothic", Font.BOLD, 20));
+		panelCategoria.add(cbCategoria );
 
 	}
 }

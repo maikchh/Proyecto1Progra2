@@ -4,21 +4,24 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.FlowLayout;
 import java.awt.Font;
+import java.util.ArrayList;
 
 import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.UIManager;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.UIManager;
+
+import com.proyecto1.mvc.models.Categoria;
 
 public class CategoriaView extends JPanel {
 	public JButton btnNueva;
 	public JButton btnEditar;
 	public JButton btnEliminar;
 	public DefaultTableModel model;
-	private JTable table;
+	public JTable table;
 
 	
 	public CategoriaView() {
@@ -60,15 +63,5 @@ public class CategoriaView extends JPanel {
 		btnEliminar.setFont(new Font("Yu Gothic", Font.BOLD, 26));
 		btnEliminar.setBackground(new Color(46, 53, 50));
 		buttonsPanel.add(btnEliminar);
-	}
-
-	public String[] getColumns() {
-		return new String[] {"ID", "NOMBRE"};
-	}
-	
-	public Object[][] getData(/*AQUI VA EL ARRAYLIST DE CATEGORIA*/){
-		
-		Object[][] data = new Object[5][getColumns().length];
-		return data;
 	}
 }

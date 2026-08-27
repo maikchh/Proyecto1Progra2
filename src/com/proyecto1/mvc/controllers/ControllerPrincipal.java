@@ -1,35 +1,19 @@
 package com.proyecto1.mvc.controllers;
 
 import java.util.ArrayList;
-
 import com.proyecto1.mvc.models.Almacenamiento;
 import com.proyecto1.mvc.models.Categoria;
 import com.proyecto1.mvc.models.Tarea;
-import com.proyecto1.mvc.views.CategoriaEditar;
-import com.proyecto1.mvc.views.CategoriaView;
 import com.proyecto1.mvc.views.ViewPrincipal;
-import com.proyecto1.mvc.views.tareasCompletadasPendientes;
-import com.proyecto1.mvc.views.tareasRegistrarEditar;
-
 
 public class ControllerPrincipal extends Functions{
 
 	private ViewPrincipal vp;
-	private CategoriaView cv;
-	private tareasCompletadasPendientes tcp;
-	private tareasRegistrarEditar tre;
-	private CategoriaEditar ce;
 	private Almacenamiento<Categoria> listaCategorias;
 	private Almacenamiento<Tarea> listaTareas;
-	private int estadoActual = 0;
 
 	public ControllerPrincipal() {
 		vp = new ViewPrincipal();
-		cv = new CategoriaView();
-		tcp = new tareasCompletadasPendientes();
-		tre = new tareasRegistrarEditar();
-		ce = new CategoriaEditar();
-
 		listaCategorias = new Almacenamiento<>(new ArrayList<>());
 		listaTareas = new Almacenamiento<>(new ArrayList<>());
 
@@ -38,11 +22,8 @@ public class ControllerPrincipal extends Functions{
 	public void starting() {
 		loadData();
 		actualizarTotalTareas();;
-		initTareasEventos();
 		vp.init();
 		principalButtons();
-		tareasButtons();
-		categoriasButtons();
 	}
 
 	public void actualizarTotalTareas() {
@@ -53,80 +34,27 @@ public class ControllerPrincipal extends Functions{
 
 	public void principalButtons() {
 		vp.btnCategorias.addActionListener(e->{
-			vp.setContent(cv, "Categorias - Listas");
-			cv.model.setDataVector(cv.getData(), cv.getColumns());
+			CategoriaController cc = new CategoriaController(vp, listaCategorias);
+			cc.init();
 		});
 
-		vp.btnTareasPendientes.addActionListener(e->{
-			estadoActual = 0;
-			refrescarComboBox();
-			tcp.buttonsPanel.setVisible(true);
-			actualizarTablaTareas();
-			vp.setContent(tcp, "Tareas - Pendientes");
+		vp.btnTareasPendientes.addActionListener(e->{		
+			TareasController tc = new TareasController(vp, listaTareas, listaCategorias);
+			tc.init();
 		});
 
 		vp.btnTareasCompletadas.addActionListener(e->{
-			estadoActual = 1;
-			refrescarComboBox();
-			tcp.buttonsPanel.setVisible(false);
-			actualizarTablaTareas();
-			vp.setContent(tcp, "Tareas Completadas");
-
+			TareasController tc = new TareasController(vp, listaTareas, listaCategorias);
+			tc.refrestTableComplete();
 		});
 		
 		vp.btnInicio.addActionListener(e->{
 			actualizarTotalTareas();
 			vp.setContent(vp.panelTabla, "Sistema Gestor de Tareas");
-		});
-	}
-
-
-	public void tareasButtons() {
-		tcp.btnNueva.addActionListener(e->{
-			vp.setContent(tre, "Tareas - Registrar/Editar");
-		});
-
-		tcp.btnEditar.addActionListener(e->{
-			vp.setContent(tre, "Tareas - Registrar/Editar");
-		});
-
-		tre.btnRegresar.addActionListener(e->{
-			vp.setContent(tcp, "Tareas - Pendientes");
+			
 		});
 	}
 	
-	
-	private void actualizarTablaTareas() {
-		String categoria = (String) tcp.cbxCategTareaP.getSelectedItem();
-		if (categoria != null) {
-			int idCategoria = buscarCategoria(categoria);
-			tcp.model.setDataVector(tcp.getData(listaTareas.all(), estadoActual, idCategoria), tcp.getColumns());
-		}
-	}
-	
-	
-	public void initTareasEventos() {
-		tcp.cbxCategTareaP.addActionListener(e -> {
-			if (tcp.cbxCategTareaP.getSelectedIndex() != -1) {
-				actualizarTablaTareas();
-			}
-		});
-	}
-
-
-	public void categoriasButtons() {
-		cv.btnNueva.addActionListener(e->{
-			vp.setContent(ce, "Categorias - Registrar/Editar");
-		});
-
-		cv.btnEditar.addActionListener(e->{
-			vp.setContent(ce, "Categorias - Registrar/Editar");
-		});
-
-		ce.btnRegresar.addActionListener(e->{
-			vp.setContent(cv, "Categorias - Listas");
-		});
-	}
 	private void loadData() {
 		// 1. Crear y almacenar 5 Categorías (IDs del 1 al 5)
 		listaCategorias.store(new Categoria("Trabajo"));
@@ -195,22 +123,5 @@ public class ControllerPrincipal extends Functions{
 		listaTareas.store(new Tarea("Presentar avance", "Mostrar prototipo al cliente", true, 5));
 		listaTareas.store(new Tarea("Definir requerimientos", "Anotar nuevas funcionalidades pedidas", true, 5));
 
-	}
-
-	public void refrescarComboBox() {
-		tcp.llenarComboBox(listaCategorias.all());
-	}
-
-	public int buscarCategoria(String nombre) {
-		int id = -1;
-		ArrayList<Categoria> categorias = listaCategorias.all();
-		for(Categoria c: categorias) {
-
-			if(c.getNombre().equalsIgnoreCase(nombre)) {
-				id= c.getId();
-				return id;
-			}
-		}
-		return id;
 	}
 }
