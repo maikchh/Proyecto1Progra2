@@ -84,13 +84,14 @@ public class TareasController extends Functions{
 		vp.setContent(tre, "Tareas - Registrar/Editar");
 		
 		tre.btnGuardar.addActionListener(e->{
-			/*
-			 *FALTA TERMINAR 
-			 */
-			/*String nombre = tre.txtName.getText();
+			
+			String nombre = tre.txtName.getText();
 			String descripcion = tre.txtDescripcion.getText();
-			Categoria item = listaCategorias.find(id)
-			int idCategoria =;*/
+			int idCategoria = getIdCategoria(tre.cbCategoria.getSelectedItem().toString());
+			
+			listaTareas.store(new Tarea(nombre, descripcion,false,idCategoria));
+			
+			index();
 		});
 		
 		tre.btnRegresar.addActionListener(e->{
@@ -177,6 +178,18 @@ public class TareasController extends Functions{
 		i++;
 		}
 		return data;
+	}
+	
+	public int getIdCategoria(String nombre) {
+		int id=0;
+		
+		for (Categoria item:listaCategorias.all()) {
+			if(item.getNombre().equals(nombre)) {
+				id=item.getId();
+			}
+			
+		}
+		return id;
 	}
 	
 	public void refrestTableComplete() {
