@@ -26,6 +26,7 @@ public class CategoriaRegitsrarEdit extends JPanel {
 		add(lblNombre);
 		
 		txtNombreCategoria = new JTextField();
+		txtNombreCategoria.setFont(new Font("Yu Gothic", Font.BOLD, 20));
 		txtNombreCategoria.setBounds(178, 168, 646, 46);
 		add(txtNombreCategoria);
 		txtNombreCategoria.setColumns(10);
