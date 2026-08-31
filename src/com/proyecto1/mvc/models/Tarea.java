@@ -60,15 +60,6 @@ public class Tarea implements Entidad {
 		this.idCategoria = idCategoria;
 	}
 	
-	public String conversorBooleanAString() { 
-		if(isEstado() == true) {
-			return "Completada";
-		}
-		
-		return "Pendiente";
-	}
-	
-	
 	//Este metodo sobre escribe el metodo que le manda la interface y lo utiliza.
 	@Override
 	public void update(Entidad nueva) {

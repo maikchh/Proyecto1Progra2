@@ -114,53 +114,10 @@ public class tareasCompletadasPendientes extends JPanel {
 		lblCategoria_1.setFont(new Font("Yu Gothic", Font.BOLD, 23));
 		panel_4.add(lblCategoria_1);
 
-		lblVarCategoria = new JLabel(" Universidad");
+		lblVarCategoria = new JLabel("Ninguna");
 		lblVarCategoria.setFont(new Font("Yu Gothic", Font.BOLD, 23));
 		panel_4.add(lblVarCategoria);
 
 	}
-
-	public String[] getColumns() {
-		return new String[] {"ID", "NOMBRE", "DESCRIPCION"};
-	}
-
-	public Object[][] getData(ArrayList<Tarea> tareas, int estado, int categoria){
-		ArrayList<Tarea> listaTareas = filtrarTareas(tareas,  estado,  categoria);
-		int i= 0;
-		Object[][] data = new Object[listaTareas.size()][getColumns().length];
-		for(Tarea item: listaTareas) {
-
-			data[i][0]= item.getId();
-			data[i][1]= item.getNombre();
-			data[i][2]= item.getDescripcion();
-			i++;
-		}
-		return data;
-	}
-
-	/*public void llenarComboBox(ArrayList<Categoria> listaCategorias) {
-		cbxCategTareaP.removeAllItems();
-		for(Categoria c: listaCategorias) {
-			cbxCategTareaP.addItem(c.getNombre());
-
-		}
-
-	}*/
-
-
-	public ArrayList<Tarea> filtrarTareas(ArrayList<Tarea> listaTareas, int estado, int categoria){
-
-		boolean completada=false;
-		ArrayList<Tarea> lista = new ArrayList<>();
-		if(estado == 1 ) {
-			completada=true;
-		}
-		for(Tarea item: listaTareas) {
-			if(item.isEstado() == completada && item.getIdCategoria()==categoria) {
-
-				lista.add(item);
-			}
-		}
-		return lista;}
 
 }

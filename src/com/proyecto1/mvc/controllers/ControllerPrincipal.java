@@ -11,6 +11,7 @@ public class ControllerPrincipal extends Functions{
 	private ViewPrincipal vp;
 	private Almacenamiento<Categoria> listaCategorias;
 	private Almacenamiento<Tarea> listaTareas;
+	private boolean estadoActual  =false;
 
 	public ControllerPrincipal() {
 		vp = new ViewPrincipal();
@@ -38,14 +39,16 @@ public class ControllerPrincipal extends Functions{
 			cc.init();
 		});
 
-		vp.btnTareasPendientes.addActionListener(e->{		
-			TareasController tc = new TareasController(vp, listaTareas, listaCategorias);
+		vp.btnTareasPendientes.addActionListener(e->{	
+			estadoActual = false;
+			TareasController tc = new TareasController(vp, listaTareas, listaCategorias,estadoActual );
 			tc.init();
 		});
 
 		vp.btnTareasCompletadas.addActionListener(e->{
-			TareasController tc = new TareasController(vp, listaTareas, listaCategorias);
-			tc.refrestTableComplete();
+			estadoActual = true;
+			TareasController tc = new TareasController(vp, listaTareas, listaCategorias, estadoActual);
+			tc.init();
 		});
 		
 		vp.btnInicio.addActionListener(e->{

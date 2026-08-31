@@ -13,37 +13,39 @@ import com.proyecto1.mvc.views.tareasCompletadasPendientes;
 import com.proyecto1.mvc.views.tareasRegistrarEditar;
 
 public class TareasController extends Functions{
-	
+
 	private tareasCompletadasPendientes tcp;
 	private ViewPrincipal vp;
 	private Almacenamiento<Tarea> listaTareas;
 	private Almacenamiento<Categoria> listaCategorias;
-	private int estadoActual = 0;
-	
-	public TareasController(ViewPrincipal vp, Almacenamiento<Tarea> listaTareas, Almacenamiento<Categoria> listaCategorias) {
+	private boolean estadoActual;
+	private String ultimaCatSelecionada;
+
+	public TareasController(ViewPrincipal vp, Almacenamiento<Tarea> listaTareas, Almacenamiento<Categoria> listaCategorias, boolean estadoActual) {
 		tcp = new tareasCompletadasPendientes();
 		this.vp = vp;
 		this.listaTareas = listaTareas;
 		this.listaCategorias = listaCategorias;
+		this.estadoActual = estadoActual;
 	}
-		
+
 	/*
 	 *VISTAS 
 	 */
-	
+
 	public void init() {
 		index();
 	}
-	
-	
+
+
 	public void index() {
-		estadoActual = 0;
+
 		llenarComboBox(tcp.cbxCategTareaP);
-		tcp.buttonsPanel.setVisible(true);
-		actualizarTablaTareas();
-		initTareasEventos();
-		vp.setContent(tcp, "Tareas - Pendientes");
 		
+		actualizarTablaTareas(ultimaCatSelecionada);
+
+		changeWindow();
+
 		tcp.btnNueva.addActionListener(e->{
 			create();
 		});
@@ -65,7 +67,7 @@ public class TareasController extends Functions{
 				}
 			}
 		});
-		
+
 		tcp.btnCompletada.addActionListener(e->{
 			int id = getSelectedID(tcp.table);
 			if(id > 0) {
@@ -75,61 +77,67 @@ public class TareasController extends Functions{
 				index();
 			}
 		});
+
+		tcp.btnCargar.addActionListener(e->{
+			String categoria = (String) tcp.cbxCategTareaP.getSelectedItem();
+			actualizarTablaTareas(categoria);
+		});
 	}
-	
-	
+
+
 	public void create() {
 		tareasRegistrarEditar tre = new tareasRegistrarEditar();
 		llenarComboBox(tre.cbCategoria);
 		vp.setContent(tre, "Tareas - Registrar/Editar");
-		
+
 		tre.btnGuardar.addActionListener(e->{
-			
+
 			String nombre = tre.txtName.getText();
 			String descripcion = tre.txtDescripcion.getText();
 			int idCategoria = getIdCategoria(tre.cbCategoria.getSelectedItem().toString());
-			
+
 			listaTareas.store(new Tarea(nombre, descripcion,false,idCategoria));
-			
+
 			index();
 		});
-		
+
 		tre.btnRegresar.addActionListener(e->{
-			vp.setContent(tcp, "Tareas - Pendientes");
+			changeWindow();
 		});
 	}
-	
+
 	public void edit(int id) {
 		tareasRegistrarEditar tre = new tareasRegistrarEditar();
 		tre.cbCategoria.setEnabled(false);;
 		llenarComboBox(tre.cbCategoria);
 		vp.setContent(tre, "Tareas - Registrar/Editar");
-		
+
 		Tarea item = listaTareas.find(id);
 		tre.txtName.setText(item.getNombre());
 		tre.txtDescripcion.setText(item.getDescripcion());
 		Categoria selected = listaCategorias.find(item.getIdCategoria());
 		tre.cbCategoria.setSelectedItem(selected.getNombre());
-		
+
 		tre.btnGuardar.addActionListener(e->{
 			String nombre = tre.txtName.getText();
 			String descripcion = tre.txtDescripcion.getText();
 			boolean estado = item.getEstado();
 			listaTareas.update(new Tarea(nombre, descripcion, estado, item.getIdCategoria()), id);
-			
-			index();
+
+			index();																									
 		});;
-		
+
 		tre.btnRegresar.addActionListener(e->{
 			vp.setContent(tcp, "Tareas - Pendientes");
 		});
 	}
-	
-	private void actualizarTablaTareas() {
-		String categoria = (String) tcp.cbxCategTareaP.getSelectedItem();
+
+	private void actualizarTablaTareas(String categoria) {
+		ultimaCatSelecionada= categoria;
 		if (categoria != null) {
-			int idCategoria = buscarCategoria(categoria);
-			tcp.model.setDataVector(tcp.getData(listaTareas.all(), estadoActual, idCategoria), tcp.getColumns());
+			tcp.model.setDataVector(getData(listaTareas.all(), estadoActual, getIdCategoria(categoria)), getColumns());
+			tcp.cbxCategTareaP.setSelectedItem(categoria);
+			tcp.lblVarCategoria.setText(categoria);
 		}
 	}
 
@@ -139,67 +147,64 @@ public class TareasController extends Functions{
 			item.addItem(c.getNombre());
 		}
 	}
-	
-	
-	public int buscarCategoria(String nombre) {
-		int id = -1;
-		ArrayList<Categoria> categorias = listaCategorias.all();
-		for(Categoria c: categorias) {
 
-			if(c.getNombre().equalsIgnoreCase(nombre)) {
-				id= c.getId();
-				return id;
-			}
-		}
-		return id;
-	}
-	
-	public void initTareasEventos() {
-		tcp.cbxCategTareaP.addActionListener(e -> {
-			if (tcp.cbxCategTareaP.getSelectedIndex() != -1) {
-				actualizarTablaTareas();
-			}
-		});
-	}
-	
-	public String[] getColumns() {
-		return new String[] {"ID", "NOMBRE", "DESCRIPCION"};
-	}
-
-	public Object[][] getData(int estado, int categoria){
-		ArrayList<Tarea> listaTareas = tcp.filtrarTareas(this.listaTareas.all(),  estado,  categoria);
-		int i= 0;
-		Object[][] data = new Object[listaTareas.size()][getColumns().length];
-		for(Tarea item: listaTareas) {
-			
-		data[i][0]= item.getId();
-		data[i][1]= item.getNombre();
-		data[i][2]= item.getDescripcion();
-		i++;
-		}
-		return data;
-	}
-	
 	public int getIdCategoria(String nombre) {
-		int id=0;
-		
+		int id=-1;
+
 		for (Categoria item:listaCategorias.all()) {
 			if(item.getNombre().equals(nombre)) {
 				id=item.getId();
 			}
-			
+
 		}
 		return id;
 	}
-	
-	public void refrestTableComplete() {
-		estadoActual = 1;
-		llenarComboBox(tcp.cbxCategTareaP);
-		tcp.buttonsPanel.setVisible(false);
-		actualizarTablaTareas();
-		initTareasEventos();
-		vp.setContent(tcp, "Tareas - Completadas");
+
+
+	public void changeWindow() {
+
+		if(estadoActual == false) {
+			vp.setContent(tcp, "Tareas - Pendientes");
+		}else {
+			vp.setContent(tcp, "Tareas - Completas");
+			tcp.buttonsPanel.setVisible(false);
+		}
 	}
-	
-	
+	public String[] getColumns() {
+		return new String[] {"ID", "NOMBRE", "DESCRIPCION"};
+	}
+
+	public Object[][] getData(ArrayList<Tarea> tareas, boolean estado, int categoria){
+		ArrayList<Tarea> listaTareas = filtrarTareas(tareas,  estado,  categoria);
+		int i= 0;
+		Object[][] data = new Object[listaTareas.size()][getColumns().length];
+		for(Tarea item: listaTareas) {
+
+			data[i][0]= item.getId();
+			data[i][1]= item.getNombre();
+			data[i][2]= item.getDescripcion();
+			i++;
+		}
+		return data;
+	}
+
+
+
+	public ArrayList<Tarea> filtrarTareas(ArrayList<Tarea> listaTareas, boolean estado, int categoria){
+
+		
+		ArrayList<Tarea> lista = new ArrayList<>();
+		
+		for(Tarea item: listaTareas) {
+			if(item.isEstado() == estado && item.getIdCategoria()==categoria) {
+
+				lista.add(item);
+			}
+		}
+		return lista;}
+
+
+
+
+
 }
